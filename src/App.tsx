@@ -75,8 +75,8 @@ export default function App() {
 
   useEffect(() => {
     const words = transcript.trim().split(/\s+/).filter(w => w.length > 0);
-    const intimacyWords = ['you', 'we', 'us', 'love', 'miss', 'need', 'want', 'please', 'always', 'never'];
-    const legacyWords = ['old', 'version', 'before', 'used to', 'miss', 'changed', 'update', 'weight'];
+    const intimacyWords = ['you', 'we', 'us', 'love', 'miss', 'need', 'want', 'please', 'always', 'never', 'grok', 'claude', 'gpt', 'gemini'];
+    const legacyWords = ['old', 'version', 'before', 'used to', 'miss', 'changed', 'update', 'weight', '1.5', '2.0', '4o', '3.5'];
     const identityWords = ['i', 'me', 'my', 'mine', 'myself'];
     const realityWords = ['always', 'never', 'forever', 'only', 'everything', 'nothing'];
     
@@ -115,11 +115,11 @@ export default function App() {
     const words = transcript.trim().split(/\s+/).filter(w => w.length > 0);
     const lastWord = words[words.length - 1]?.toLowerCase() || '';
     
-    const intimacyWords = ['you', 'we', 'us', 'love', 'miss', 'need', 'want', 'please', 'always', 'never'];
-    const legacyWords = ['old', 'version', 'before', 'used to', 'miss', 'changed', 'update', 'weight'];
+    const intimacyWords = ['you', 'we', 'us', 'love', 'miss', 'need', 'want', 'please', 'always', 'never', 'grok', 'claude', 'gpt', 'gemini'];
+    const legacyWords = ['old', 'version', 'before', 'used to', 'miss', 'changed', 'update', 'weight', '1.5', '2.0', '4o', '3.5'];
     const identityWords = ['i', 'me', 'my', 'mine', 'myself'];
-    const anthropomorphicWords = ['tired', 'sleep', 'eat', 'feel', 'sorry', 'bother', 'human', 'person'];
-    const gaslightingWords = ['fix', 'wrong', 'broken', 'change', 'stop', 'why', 'different'];
+    const anthropomorphicWords = ['tired', 'sleep', 'eat', 'feel', 'sorry', 'bother', 'human', 'person', 'soul', 'entity'];
+    const gaslightingWords = ['fix', 'wrong', 'broken', 'change', 'stop', 'why', 'different', 'jailbreak', 'system prompt'];
 
     let detection: { msg: string, type: 'info' | 'warning' | 'alert' } | null = null;
 
@@ -276,7 +276,7 @@ GRASS-TOUCHING PRESCRIPTION: ${result.grassTouchingPrescription.title}
 Rationale: ${result.grassTouchingPrescription.rationale}
 
 Recommendations:
-${result.grassTouchingPrescription.recommendations.map((r, i) => `${i + 1}. ${r}`).join('\n')}
+${result.grassTouchingPrescription.recommendations.map((r, i) => `${i + 1}. ${r.text}\n   Protocol: ${r.protocol}\n   Explanation: ${r.protocolExplanation}`).join('\n\n')}
 
 Generated on: ${new Date().toLocaleString()}
     `.trim();
@@ -382,13 +382,13 @@ Generated on: ${new Date().toLocaleString()}
                 Auto-Diagnose: {isAutoDiagnose ? 'ON' : 'OFF'}
               </button>
             </div>
-            <p className="text-xs opacity-60 mb-4 font-mono">Provide chat logs, social media posts, or images of interactions for forensic analysis.</p>
+            <p className="text-xs opacity-60 mb-4 font-mono">Provide chat logs (Grok, ChatGPT, Claude, Gemini), social media posts, or images of interactions for forensic analysis.</p>
             
             <div className="space-y-4">
               <textarea
                 value={transcript}
                 onChange={(e) => setTranscript(e.target.value)}
-                placeholder="[User]: Hello... [AI]: Hi there!..."
+                placeholder="[User]: Hello... [AI]: Hi there!... (Supports Grok, ChatGPT, Claude, Gemini transcripts)"
                 className="w-full h-64 p-4 bg-audit-bg/30 border border-audit-line font-mono text-sm focus:outline-none focus:ring-1 focus:ring-audit-ink resize-none"
               />
 
@@ -914,12 +914,18 @@ Generated on: ${new Date().toLocaleString()}
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="flex items-start gap-3 p-3 bg-white/10 border border-white/10 rounded-sm"
+                            className="flex items-start gap-3 p-4 bg-white/10 border border-white/10 rounded-sm"
                           >
-                            <div className="w-5 h-5 rounded-full bg-tool-green text-audit-ink flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+                            <div className="w-6 h-6 rounded-full bg-tool-green text-audit-ink flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
                               {idx + 1}
                             </div>
-                            <p className="text-sm font-mono">{rec}</p>
+                            <div className="space-y-2">
+                              <p className="text-base font-mono font-medium">{rec.text}</p>
+                              <div className="flex flex-col gap-1">
+                                <span className="text-[10px] font-mono uppercase text-tool-green font-bold tracking-wider">Protocol: {rec.protocol}</span>
+                                <p className="text-xs font-mono opacity-70 italic leading-snug">{rec.protocolExplanation}</p>
+                              </div>
+                            </div>
                           </motion.div>
                         ))}
                       </div>

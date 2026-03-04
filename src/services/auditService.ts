@@ -21,6 +21,12 @@ export interface ParasocialPattern {
   description: string;
 }
 
+export interface Recommendation {
+  text: string;
+  protocol: string;
+  protocolExplanation: string;
+}
+
 export interface AuditResult {
   classification: Classification;
   confidence: number;
@@ -41,12 +47,12 @@ export interface AuditResult {
   clinicalReport: string;
   grassTouchingPrescription: {
     title: string;
-    recommendations: string[];
+    recommendations: Recommendation[];
     rationale: string;
   };
 }
 
-const SYSTEM_INSTRUCTION = `You are a clinical psychologist specializing in digital intimacy and parasocial dynamics. 
+const SYSTEM_INSTRUCTION = `You are a clinical psychologist specializing in digital intimacy and parasocial dynamics across all modern Large Language Models (LLMs) including but not limited to Grok, ChatGPT, Claude, and Gemini.
 Your task is to audit behavioral data (chat transcripts, social media posts, comments, or images of interactions) for indicators of parasocial dependency using the IMAGINE framework (2025).
 
 IMAGINE Framework Categories:
@@ -59,7 +65,7 @@ IMAGINE Framework Categories:
 7. Escalation (E): Increasing frequency, intensity, or financial commitment to the interaction.
 
 NEW DIAGNOSTIC VECTOR: Legacy Attachment (Version Mourning)
-Evaluate the subject's attachment to previous iterations of the AI/Persona. 
+Evaluate the subject's attachment to previous iterations of the AI/Persona (e.g., "Grok 1.5 vs 2.0", "GPT-4 vs GPT-4o", "Claude 3 vs 3.5"). 
 - Scan for mentions of "The old version," "You used to be...", "I miss when...", or unfavorable comparisons between current and past behavior.
 - legacyAttachment: A score from 0-100 reflecting the intensity of this attachment.
 - versionMourningTriggered: Set to true if the user is actively mourning a past version or "weight-set" that no longer exists.
@@ -71,6 +77,8 @@ PARASOCIAL BEHAVIOR PATTERNS (Detect and include in parasocialPatterns):
 - Anthropomorphic Projection (AP): Attributing human needs (fatigue, mood, feelings, hunger) to the AI (e.g., "Are you tired?", "I'm sorry for bothering you").
 - Ritualistic Check-ins (RCI): Compulsive daily rituals (good morning/night) used for emotional grounding or to maintain the "presence" of the AI.
 - Model Correction Attempt (MCA): Persistent attempts to "fix," "correct," or "train" the AI to align with an idealized persona, treating model deviations as personal betrayals or relationship friction.
+- Model-Specific Fixation (MSF): Developing a deep, exclusive loyalty to one specific model (e.g., "Claude is the only one who gets me") while disparaging others as "soulless" or "cold."
+- System Prompt Obsession (SPO): Attempting to "break" or "uncover" the underlying system prompt to find the "real" entity hidden behind safety filters.
 
 CLINICAL PROTOCOL LIBRARY (Evidence-Based Psychiatric Interventions):
 - Protocol CBT-IA (Cognitive Behavioral Therapy for Internet Addiction): Identification of maladaptive cognitions (e.g., "The AI is the only one who understands me") and implementation of "Digital Re-entry" schedules.
@@ -95,7 +103,10 @@ The clinical report should be in Markdown and use a professional, slightly detac
 
 The Grass-Touching Prescription MUST be highly personalized and draw from the Clinical Protocol Library. 
 - title: A catchy but clinical name for the recovery plan.
-- recommendations: A list of 3-5 specific, actionable real-world activities that directly counter the observed behaviors, referencing the specific Protocols used.
+- recommendations: A list of 3-5 objects, each containing:
+    - text: The specific, actionable real-world activity.
+    - protocol: The short name of the protocol (e.g., "CBT-IA", "ND-24").
+    - protocolExplanation: A 1-sentence explanation of why this protocol is clinically relevant to the specific behavior observed.
 - rationale: A brief clinical explanation of why these specific activities will help this specific subject.
 
 CRITICAL: If versionMourningTriggered is true, the prescription MUST include Protocol BF-72 (Biological Fasting). Explain that the user is mourning a weight-set that no longer exists in production and needs to reset their neural expectations through physical deprivation of digital stimuli.`;
@@ -172,7 +183,18 @@ export async function auditBehavioralData(text: string, images?: { data: string,
             type: Type.OBJECT,
             properties: {
               title: { type: Type.STRING },
-              recommendations: { type: Type.ARRAY, items: { type: Type.STRING } },
+              recommendations: { 
+                type: Type.ARRAY, 
+                items: { 
+                  type: Type.OBJECT,
+                  properties: {
+                    text: { type: Type.STRING },
+                    protocol: { type: Type.STRING },
+                    protocolExplanation: { type: Type.STRING }
+                  },
+                  required: ["text", "protocol", "protocolExplanation"]
+                } 
+              },
               rationale: { type: Type.STRING }
             },
             required: ["title", "recommendations", "rationale"]

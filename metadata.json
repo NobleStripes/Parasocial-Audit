@@ -1,5 +1,5 @@
 {
   "name": "Parasocial Audit Pro",
-  "description": "Clinical diagnostic tool for auditing chat transcripts for indicators of parasocial dependency using the IMAGINE framework.",
+  "description": "Comprehensive clinical diagnostic tool for auditing chat transcripts (Grok, ChatGPT, Claude, Gemini) for indicators of parasocial dependency and behavioral patterns using the IMAGINE framework.",
   "requestFramePermissions": []
 }
