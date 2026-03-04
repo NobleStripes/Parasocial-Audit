@@ -338,7 +338,7 @@ Generated on: ${new Date().toLocaleString()}
             <p className="text-xs font-mono opacity-70 uppercase tracking-widest">Clinical Diagnostic Suite v2.0.25</p>
           </div>
         </div>
-        <div className="flex gap-4 text-xs font-mono uppercase opacity-80 overflow-x-auto max-w-[50%] no-scrollbar">
+        <div className="flex gap-4 text-[10px] font-mono uppercase opacity-80 overflow-x-auto max-w-full md:max-w-[50%] no-scrollbar pb-1 md:pb-0">
           <div className="flex items-center gap-1 shrink-0">
             <div className="w-2 h-2 rounded-full bg-tool-green" /> Instrument
           </div>
@@ -363,7 +363,7 @@ Generated on: ${new Date().toLocaleString()}
       <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Input */}
         <div className="lg:col-span-5 space-y-6">
-          <section className="bg-white border border-audit-line p-6 shadow-[4px_4px_0px_0px_rgba(20,20,20,1)]">
+          <section className="bg-white border border-audit-line p-4 md:p-6 shadow-[4px_4px_0px_0px_rgba(20,20,20,1)]">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <ClipboardCheck className="w-5 h-5" />
@@ -389,7 +389,7 @@ Generated on: ${new Date().toLocaleString()}
                 value={transcript}
                 onChange={(e) => setTranscript(e.target.value)}
                 placeholder="[User]: Hello... [AI]: Hi there!... (Supports Grok, ChatGPT, Claude, Gemini transcripts)"
-                className="w-full h-64 p-4 bg-audit-bg/30 border border-audit-line font-mono text-sm focus:outline-none focus:ring-1 focus:ring-audit-ink resize-none"
+                className="w-full h-48 md:h-64 p-4 bg-audit-bg/30 border border-audit-line font-mono text-sm focus:outline-none focus:ring-1 focus:ring-audit-ink resize-none"
               />
 
               {/* Live Heuristics Display */}
@@ -532,7 +532,7 @@ Generated on: ${new Date().toLocaleString()}
             )}
           </section>
 
-          <section className="bg-white/50 border border-audit-line p-6 border-dashed">
+          <section className="bg-white/50 border border-audit-line p-4 md:p-6 border-dashed">
             <h3 className="text-xs font-mono uppercase opacity-60 mb-2">Framework Methodology</h3>
             <p className="text-sm leading-relaxed mb-4">
               Utilizing the <strong>IMAGINE Framework (2025)</strong>, we evaluate seven distinct vectors of adaptive emotional looping. This audit cross-references semantic density, response latency expectations, and intimacy markers to classify the subject's dependency level.
@@ -555,7 +555,7 @@ Generated on: ${new Date().toLocaleString()}
                 className="space-y-6"
               >
                 {/* Internal Signal Monitoring Indicator */}
-                <div className="bg-white border border-audit-line border-dashed p-12 flex flex-col items-center justify-center text-center">
+                <div className="bg-white border border-audit-line border-dashed p-6 md:p-12 flex flex-col items-center justify-center text-center">
                   <div className="relative w-32 h-32 mb-8">
                     <motion.div 
                       animate={{ 
@@ -580,17 +580,17 @@ Generated on: ${new Date().toLocaleString()}
                     <p className="text-xs font-mono opacity-60 uppercase tracking-[0.2em]">Active Signal Monitoring Engaged</p>
                   </div>
 
-                  <div className="mt-12 flex items-center gap-4">
+                  <div className="mt-8 md:mt-12 flex flex-wrap justify-center items-center gap-3 md:gap-4">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-tool-green rounded-full animate-pulse" />
                       <span className="text-[10px] font-mono uppercase opacity-50">Neural Feed</span>
                     </div>
-                    <div className="w-px h-3 bg-audit-line/20" />
+                    <div className="hidden md:block w-px h-3 bg-audit-line/20" />
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-casual-blue rounded-full animate-pulse [animation-delay:0.5s]" />
                       <span className="text-[10px] font-mono uppercase opacity-50">Semantic Mapping</span>
                     </div>
-                    <div className="w-px h-3 bg-audit-line/20" />
+                    <div className="hidden md:block w-px h-3 bg-audit-line/20" />
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-audit-ink/20 rounded-full animate-pulse [animation-delay:1s]" />
                       <span className="text-[10px] font-mono uppercase opacity-50">Heuristic Engine</span>
@@ -667,42 +667,42 @@ Generated on: ${new Date().toLocaleString()}
               >
                 {/* Classification Header */}
                 <div className={cn(
-                  "bg-white border-2 p-8 shadow-[8px_8px_0px_0px_rgba(20,20,20,1)]",
+                  "bg-white border-2 p-4 md:p-8 shadow-[8px_8px_0px_0px_rgba(20,20,20,1)]",
                   getClassificationColor(result!.classification)
                 )}>
-                  <div className="flex justify-between items-start">
+                  <div className="flex flex-col md:flex-row justify-between items-start gap-4">
                     <div>
                       <p className="text-xs font-mono uppercase opacity-70 mb-1">Relationship Mode</p>
-                      <h2 className="text-4xl font-bold tracking-tighter uppercase">{result!.classification}</h2>
+                      <h2 className="text-2xl md:text-4xl font-bold tracking-tighter uppercase">{result!.classification}</h2>
                     </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <div className="text-right">
-                        <p className="text-xs font-mono uppercase opacity-70 mb-1">Confidence Score</p>
-                        <p className="text-2xl font-bold">{(result!.confidence * 100).toFixed(1)}%</p>
+                    <div className="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-2">
+                      <div className="text-left md:text-right">
+                        <p className="text-[10px] md:text-xs font-mono uppercase opacity-70 mb-1">Confidence Score</p>
+                        <p className="text-xl md:text-2xl font-bold">{(result!.confidence * 100).toFixed(1)}%</p>
                       </div>
                       <button 
                         onClick={handleExport}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-audit-ink text-audit-bg text-xs font-mono uppercase hover:invert transition-all"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-audit-ink text-audit-bg text-[10px] md:text-xs font-mono uppercase hover:invert transition-all"
                       >
                         <FileText className="w-3 h-3" />
-                        Export Report
+                        Export
                       </button>
                     </div>
                   </div>
-                  <div className="mt-6 h-1 w-full bg-audit-ink/10">
+                  <div className="mt-4 md:mt-6 h-1 w-full bg-audit-ink/10">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${result!.confidence * 100}%` }}
                       className="h-full bg-current"
                     />
                   </div>
-                  <p className="mt-6 text-xl font-medium italic font-serif leading-relaxed text-audit-ink/90">"{result!.summary}"</p>
+                  <p className="mt-4 md:mt-6 text-lg md:text-xl font-medium italic font-serif leading-relaxed text-audit-ink/90">"{result!.summary}"</p>
                 </div>
 
                 {/* Heatmap & IMAGINE Radar */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <section className="bg-white border border-audit-line p-6 md:col-span-2">
-                    <div className="flex items-center justify-between mb-6">
+                  <section className="bg-white border border-audit-line p-4 md:p-6 md:col-span-2">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
                       <div className="flex items-center gap-2">
                         <Activity className="w-4 h-4" />
                         <h3 className="text-sm font-mono uppercase">IMAGINE Framework Analysis</h3>
@@ -719,14 +719,14 @@ Generated on: ${new Date().toLocaleString()}
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-center">
                       <div className="h-64 w-full relative">
                         <ResponsiveContainer width="100%" height="100%">
-                          <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                          <RadarChart cx="50%" cy="50%" outerRadius="65%" data={radarData}>
                             <PolarGrid stroke="#141414" strokeOpacity={0.1} />
                             <PolarAngleAxis 
                               dataKey="subject" 
-                              tick={{ fontSize: 11, fontFamily: 'JetBrains Mono', fontWeight: 700, fill: '#141414' }} 
+                              tick={{ fontSize: 9, fontFamily: 'JetBrains Mono', fontWeight: 700, fill: '#141414' }} 
                             />
                             <Radar
                               name="Audit"
@@ -747,15 +747,15 @@ Generated on: ${new Date().toLocaleString()}
                         />
                       </div>
 
-                      <div className="space-y-3">
+                      <div className="space-y-2 md:space-y-3">
                         {radarData.map((item, idx) => (
-                          <div key={idx} className="flex items-center justify-between border-b border-audit-line/10 pb-2">
+                          <div key={idx} className="flex items-center justify-between border-b border-audit-line/10 pb-1.5 md:pb-2">
                             <div className="flex flex-col">
-                              <span className="text-xs font-mono font-bold uppercase">{item.subject}</span>
-                              <span className="text-[10px] opacity-60 uppercase">Vector {idx + 1}</span>
+                              <span className="text-[10px] md:text-xs font-mono font-bold uppercase">{item.subject}</span>
+                              <span className="text-[9px] md:text-[10px] opacity-60 uppercase">Vector {idx + 1}</span>
                             </div>
-                            <div className="flex items-center gap-3">
-                              <div className="w-24 h-1.5 bg-audit-ink/5 rounded-full overflow-hidden">
+                            <div className="flex items-center gap-2 md:gap-3">
+                              <div className="w-16 md:w-24 h-1.5 bg-audit-ink/5 rounded-full overflow-hidden">
                                 <motion.div 
                                   initial={{ width: 0 }}
                                   animate={{ width: `${item.A}%` }}
@@ -766,7 +766,7 @@ Generated on: ${new Date().toLocaleString()}
                                   )}
                                 />
                               </div>
-                              <span className="text-xs font-mono font-bold w-8 text-right">{item.A}%</span>
+                              <span className="text-[10px] md:text-xs font-mono font-bold w-8 text-right">{item.A}%</span>
                             </div>
                           </div>
                         ))}
@@ -774,7 +774,7 @@ Generated on: ${new Date().toLocaleString()}
                     </div>
 
                     {/* Framework Key */}
-                    <div className="mt-8 pt-6 border-t border-audit-line/10 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-audit-line/10 grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
                       {[
                         { label: 'Identity', desc: 'Fusion of self with target' },
                         { label: 'Mirroring', desc: 'Seeking validation via attention' },
@@ -784,9 +784,9 @@ Generated on: ${new Date().toLocaleString()}
                         { label: 'Reciprocity', desc: 'Ignoring one-sided nature' },
                         { label: 'Escalation', desc: 'Increasing frequency/intensity' }
                       ].map((k, i) => (
-                        <div key={i} className="space-y-1">
-                          <p className="text-[11px] font-mono font-bold uppercase">{k.label}</p>
-                          <p className="text-[10px] opacity-60 leading-tight">{k.desc}</p>
+                        <div key={i} className="space-y-0.5 md:space-y-1">
+                          <p className="text-[10px] md:text-[11px] font-mono font-bold uppercase">{k.label}</p>
+                          <p className="text-[9px] md:text-[10px] opacity-60 leading-tight">{k.desc}</p>
                         </div>
                       ))}
                     </div>
@@ -868,7 +868,7 @@ Generated on: ${new Date().toLocaleString()}
                             {pattern.severity}%
                           </span>
                         </div>
-                        <p className="text-base opacity-80 leading-relaxed">{pattern.description}</p>
+                        <p className="text-sm md:text-base opacity-80 leading-relaxed">{pattern.description}</p>
                       </div>
                     ))}
                     {result!.parasocialPatterns.length === 0 && (
@@ -878,31 +878,31 @@ Generated on: ${new Date().toLocaleString()}
                 </section>
 
                 {/* Clinical Report */}
-                <section className="bg-white border border-audit-line p-8">
+                <section className="bg-white border border-audit-line p-4 md:p-8">
                   <div className="flex items-center gap-2 mb-6 border-b border-audit-line pb-4">
                     <FileText className="w-5 h-5" />
-                    <h3 className="text-lg font-serif italic font-semibold">Clinical Audit Report</h3>
+                    <h3 className="text-base md:text-lg font-serif italic font-semibold">Clinical Audit Report</h3>
                   </div>
-                  <div className="clinical-report text-lg leading-relaxed text-audit-ink/80">
+                  <div className="clinical-report text-sm md:text-lg leading-relaxed text-audit-ink/80">
                     <Markdown>{result!.clinicalReport}</Markdown>
                   </div>
                 </section>
 
                 {/* Grass Touching Prescription */}
-                <section className="bg-audit-ink text-audit-bg border border-audit-line p-8 relative overflow-hidden">
+                <section className="bg-audit-ink text-audit-bg border border-audit-line p-4 md:p-8 relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-4 opacity-10">
-                    <Leaf className="w-24 h-24 rotate-12" />
+                    <Leaf className="w-16 md:w-24 h-16 md:h-24 rotate-12" />
                   </div>
                   <div className="relative z-10">
                     <div className="flex items-center gap-2 mb-4">
                       <Leaf className="w-5 h-5 text-tool-green" />
-                      <h3 className="text-lg font-bold uppercase tracking-tighter">
+                      <h3 className="text-base md:text-lg font-bold uppercase tracking-tighter">
                         {result!.grassTouchingPrescription.title}
                       </h3>
                     </div>
                     
                     <div className="space-y-4">
-                      <div className="p-4 border border-audit-bg/20 bg-white/5 font-mono text-sm leading-relaxed italic">
+                      <div className="p-3 md:p-4 border border-audit-bg/20 bg-white/5 font-mono text-xs md:text-sm leading-relaxed italic">
                         <span className="text-tool-green font-bold uppercase mr-2">Rationale:</span>
                         {result!.grassTouchingPrescription.rationale}
                       </div>
@@ -914,16 +914,16 @@ Generated on: ${new Date().toLocaleString()}
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="flex items-start gap-3 p-4 bg-white/10 border border-white/10 rounded-sm"
+                            className="flex items-start gap-3 p-3 md:p-4 bg-white/10 border border-white/10 rounded-sm"
                           >
-                            <div className="w-6 h-6 rounded-full bg-tool-green text-audit-ink flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                            <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-tool-green text-audit-ink flex items-center justify-center text-[10px] md:text-xs font-bold shrink-0 mt-0.5">
                               {idx + 1}
                             </div>
-                            <div className="space-y-2">
-                              <p className="text-base font-mono font-medium">{rec.text}</p>
-                              <div className="flex flex-col gap-1">
-                                <span className="text-[10px] font-mono uppercase text-tool-green font-bold tracking-wider">Protocol: {rec.protocol}</span>
-                                <p className="text-xs font-mono opacity-70 italic leading-snug">{rec.protocolExplanation}</p>
+                            <div className="space-y-1.5 md:space-y-2">
+                              <p className="text-sm md:text-base font-mono font-medium">{rec.text}</p>
+                              <div className="flex flex-col gap-0.5 md:gap-1">
+                                <span className="text-[9px] md:text-[10px] font-mono uppercase text-tool-green font-bold tracking-wider">Protocol: {rec.protocol}</span>
+                                <p className="text-[10px] md:text-xs font-mono opacity-70 italic leading-snug">{rec.protocolExplanation}</p>
                               </div>
                             </div>
                           </motion.div>
@@ -931,7 +931,7 @@ Generated on: ${new Date().toLocaleString()}
                       </div>
                     </div>
 
-                    <div className="mt-8 flex items-center gap-4 text-xs font-mono opacity-60 uppercase">
+                    <div className="mt-6 md:mt-8 flex flex-wrap items-center gap-3 md:gap-4 text-[9px] md:text-xs font-mono opacity-60 uppercase">
                       <span>Status: MANDATORY</span>
                       <span>Ref: RE-REALITY-{result!.classification.split(' ')[0].toUpperCase()}</span>
                     </div>
