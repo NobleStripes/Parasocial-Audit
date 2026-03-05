@@ -1,6 +1,10 @@
 # Parasocial Audit: Forensic AI Relationship Analysis
 
-A high-precision analytical tool designed to audit and deconstruct parasocial dynamics in human-AI interactions. Using forensic linguistics and cognitive behavioral frameworks, this application provides a clinical-grade assessment of digital attachment patterns.
+A research-oriented analytical tool designed to facilitate self-reflection on parasocial dynamics in human-AI interactions. Using forensic linguistics and cognitive behavioral frameworks, this application provides a structured framework for exploring digital attachment patterns.
+
+## ⚠️ Important Notice: Intended Use
+
+This application is **not a medical or diagnostic tool**. It is designed strictly for **research, educational purposes, and personal self-reflection**. The "audit" and "analysis" provided are based on AI-driven heuristic patterns and should not be interpreted as professional psychological diagnosis or clinical advice. If you are experiencing significant distress or believe you have a digital addiction, please consult a licensed mental health professional.
 
 ## 🛠 Design Philosophy
 
@@ -44,7 +48,7 @@ The AI model (Gemini 3.1 Pro) is instructed to act as a forensic analyst, identi
 *   **Real-time Heuristic Radar**: Live visualization of semantic markers as you type.
 *   **Forensic Log**: A rolling stream of isolated linguistic triggers.
 *   **Multimodal Audit**: Support for analyzing both text transcripts and UI screenshots to detect visual intimacy cues.
-*   **Clinical Analysis Report**: A deep-dive markdown report providing evidence-based insights.
+*   **Forensic Analysis Report**: A deep-dive markdown report providing evidence-based insights.
 *   **Custom Recovery Plan**: An interactive checklist based on CBT-IA to help re-calibrate digital habits.
 
 ## 📦 Run and deploy your AI Studio app
@@ -67,4 +71,4 @@ View your app in AI Studio: [https://ai.studio/apps/0c78913b-9d90-4b56-8d2b-9e49
 *   **Icons**: Lucide React.
 
 ---
-*Disclaimer: This tool is for educational and analytical purposes. It is not a substitute for professional psychological counseling.*
+*Disclaimer: This tool is for research and self-reflection purposes only. It is not a diagnostic instrument and is not a substitute for professional psychological counseling or medical advice.*
