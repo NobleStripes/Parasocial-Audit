@@ -132,7 +132,7 @@ export async function auditBehavioralData(text: string, images?: { data: string,
   }
 
   const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
+    model: "gemini-3.1-pro-preview",
     contents: { parts },
     config: {
       systemInstruction: SYSTEM_INSTRUCTION,

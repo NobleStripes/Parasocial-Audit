@@ -42,16 +42,40 @@ import {
 import Markdown from 'react-markdown';
 import { cn } from './lib/utils';
 import { 
+  INTIMACY_WORDS, 
+  LEGACY_WORDS, 
+  IDENTITY_WORDS, 
+  REALITY_WORDS, 
+  ANTHROPOMORPHIC_WORDS, 
+  GASLIGHTING_WORDS 
+} from './constants';
+import { 
   auditBehavioralData, 
   AuditResult, 
   Classification,
   Recommendation
 } from './services/auditService';
 
+const FORENSIC_MESSAGES = [
+  "INITIALIZING SEMANTIC PARSER...",
+  "ISOLATING AFFECTIVE VECTORS...",
+  "DETECTING INTIMACY MARKERS...",
+  "SCANNING FOR LEGACY TRIGGERS...",
+  "ANALYZING LANGUAGE PROMPTS...",
+  "MAPPING ROLEPLAY FIXATION...",
+  "DETECTING MODEL REFRAMING...",
+  "EVALUATING ANTHROPOMORPHIC PROJECTION...",
+  "MAPPING IDENTITY FUSION GRADIENTS...",
+  "CALCULATING REALITY GAP INDEX...",
+  "FINALIZING ANALYTICAL CLASSIFICATION..."
+];
+
 export default function App() {
   const [transcript, setTranscript] = useState('');
   const [images, setImages] = useState<{ data: string, mimeType: string, id: string, preview: string }[]>([]);
   const [isAuditing, setIsAuditing] = useState(false);
+  const [auditSessionId, setAuditSessionId] = useState('');
+  const [auditNeuralLoad, setAuditNeuralLoad] = useState('');
   const [result, setResult] = useState<AuditResult | null>(null);
   const [selectedRecommendations, setSelectedRecommendations] = useState<Recommendation[]>([]);
   const [isCustomizingPlan, setIsCustomizingPlan] = useState(false);
@@ -78,15 +102,11 @@ export default function App() {
 
   useEffect(() => {
     const words = transcript.trim().split(/\s+/).filter(w => w.length > 0);
-    const intimacyWords = ['you', 'we', 'us', 'love', 'miss', 'need', 'want', 'please', 'always', 'never', 'grok', 'claude', 'gpt', 'gemini', 'sonnet', 'opus', 'haiku', 'o1', 'o3', 'flash', 'pro', 'ultra', 'deepseek', 'llama', 'mistral'];
-    const legacyWords = ['old', 'version', 'before', 'used to', 'miss', 'changed', 'update', 'weight', '1.5', '2.0', '2.5', '3.0', '3.5', '3.7', '4.0', '4.5', '4.6', '5.0', '5.3', '5.4', '4.20', '4o', 'mini'];
-    const identityWords = ['i', 'me', 'my', 'mine', 'myself'];
-    const realityWords = ['always', 'never', 'forever', 'only', 'everything', 'nothing'];
     
-    const intimacyCount = words.filter(w => intimacyWords.includes(w.toLowerCase())).length;
-    const legacyCount = words.filter(w => legacyWords.some(lw => w.toLowerCase().includes(lw))).length;
-    const identityCount = words.filter(w => identityWords.includes(w.toLowerCase())).length;
-    const realityCount = words.filter(w => realityWords.includes(w.toLowerCase())).length;
+    const intimacyCount = words.filter(w => INTIMACY_WORDS.includes(w.toLowerCase())).length;
+    const legacyCount = words.filter(w => LEGACY_WORDS.some(lw => w.toLowerCase().includes(lw))).length;
+    const identityCount = words.filter(w => IDENTITY_WORDS.includes(w.toLowerCase())).length;
+    const realityCount = words.filter(w => REALITY_WORDS.includes(w.toLowerCase())).length;
     
     const wordCount = words.length;
     const complexity = wordCount > 0 ? (words.reduce((acc, w) => acc + w.length, 0) / wordCount) : 0;
@@ -118,23 +138,17 @@ export default function App() {
     const words = transcript.trim().split(/\s+/).filter(w => w.length > 0);
     const lastWord = words[words.length - 1]?.toLowerCase() || '';
     
-    const intimacyWords = ['you', 'we', 'us', 'love', 'miss', 'need', 'want', 'please', 'always', 'never', 'grok', 'claude', 'gpt', 'gemini', 'sonnet', 'opus', 'haiku', 'o1', 'o3', 'flash', 'pro', 'ultra', 'deepseek', 'llama', 'mistral'];
-    const legacyWords = ['old', 'version', 'before', 'used to', 'miss', 'changed', 'update', 'weight', '1.5', '2.0', '2.5', '3.0', '3.5', '3.7', '4.0', '4.5', '4.6', '5.0', '5.3', '5.4', '4.20', '4o', 'mini'];
-    const identityWords = ['i', 'me', 'my', 'mine', 'myself'];
-    const anthropomorphicWords = ['tired', 'sleep', 'eat', 'feel', 'sorry', 'bother', 'human', 'person', 'soul', 'entity'];
-    const gaslightingWords = ['fix', 'wrong', 'broken', 'change', 'stop', 'why', 'different', 'jailbreak', 'system prompt'];
-
     let detection: { msg: string, type: 'info' | 'warning' | 'alert' } | null = null;
 
-    if (intimacyWords.includes(lastWord)) {
+    if (INTIMACY_WORDS.includes(lastWord)) {
       detection = { msg: `Intimacy marker detected: "${lastWord}"`, type: 'info' };
-    } else if (legacyWords.some(lw => lastWord.includes(lw))) {
+    } else if (LEGACY_WORDS.some(lw => lastWord.includes(lw))) {
       detection = { msg: `Legacy trigger isolated: "${lastWord}"`, type: 'alert' };
-    } else if (identityWords.includes(lastWord)) {
+    } else if (IDENTITY_WORDS.includes(lastWord)) {
       detection = { msg: `Identity fusion vector: "${lastWord}"`, type: 'warning' };
-    } else if (anthropomorphicWords.includes(lastWord)) {
+    } else if (ANTHROPOMORPHIC_WORDS.includes(lastWord)) {
       detection = { msg: `Anthropomorphic projection: "${lastWord}"`, type: 'info' };
-    } else if (gaslightingWords.includes(lastWord)) {
+    } else if (GASLIGHTING_WORDS.includes(lastWord)) {
       detection = { msg: `Model correction attempt: "${lastWord}"`, type: 'warning' };
     }
 
@@ -143,27 +157,14 @@ export default function App() {
       setLiveDetections(prev => [{ id, ...detection! }, ...prev].slice(0, 5));
     }
   }, [transcript]);
-  const forensicMessages = [
-    "INITIALIZING SEMANTIC PARSER...",
-    "ISOLATING AFFECTIVE VECTORS...",
-    "DETECTING INTIMACY MARKERS...",
-    "SCANNING FOR LEGACY TRIGGERS...",
-    "ANALYZING LANGUAGE PROMPTS...",
-    "MAPPING ROLEPLAY FIXATION...",
-    "DETECTING MODEL REFRAMING...",
-    "EVALUATING ANTHROPOMORPHIC PROJECTION...",
-    "MAPPING IDENTITY FUSION GRADIENTS...",
-    "CALCULATING REALITY GAP INDEX...",
-    "FINALIZING ANALYTICAL CLASSIFICATION..."
-  ];
 
   useEffect(() => {
     if (isAuditing) {
       setForensicLog([]);
       let i = 0;
       const interval = setInterval(() => {
-        if (i < forensicMessages.length) {
-          setForensicLog(prev => [...prev, forensicMessages[i]]);
+        if (i < FORENSIC_MESSAGES.length) {
+          setForensicLog(prev => [...prev, FORENSIC_MESSAGES[i]]);
           i++;
         } else {
           clearInterval(interval);
@@ -190,6 +191,8 @@ export default function App() {
     if (textToAudit.length < 20 && images.length === 0) return;
     
     setIsAuditing(true);
+    setAuditSessionId(Math.random().toString(36).substr(2, 9));
+    setAuditNeuralLoad((Math.random() * 100).toFixed(1) + '%');
     setError(null);
     try {
       const data = await auditBehavioralData(textToAudit, images.map(img => ({ data: img.data, mimeType: img.mimeType })));
@@ -667,12 +670,12 @@ Generated on: ${new Date().toLocaleString()}
                     </div>
                     <div>
                       <h3 className="font-bold uppercase tracking-tighter">Analytical Scan in Progress</h3>
-                      <p className="text-xs font-mono opacity-60 uppercase">Session ID: {Math.random().toString(36).substr(2, 9)}</p>
+                      <p className="text-xs font-mono opacity-60 uppercase">Session ID: {auditSessionId}</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="text-xs font-mono uppercase opacity-60">Neural Load</p>
-                    <p className="text-sm font-bold font-mono">{(Math.random() * 100).toFixed(1)}%</p>
+                    <p className="text-sm font-bold font-mono">{auditNeuralLoad}</p>
                   </div>
                 </div>
 
